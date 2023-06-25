@@ -47,14 +47,21 @@ const mangaForm = {
           'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         },
       })
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error en la solicitud. Estado: ' + response.status);
+        }
+        return response.json();
+      })
       .then(data => {
-        // Manejar la respuesta del servidor si es necesario
+        // Manejar la respuesta del servidor
+        console.log(data);
       })
       .catch(error => {
         // Manejar errores si es necesario
+        console.error(error);
       });
-    },
+    },    
     handleImageUpload(event) {
       this.imagen = event.target.files[0];
     }
